@@ -1,10 +1,24 @@
-
 require 'net/http'
+
+puts "DirScanner v1.0"
+puts "Hard Coded by @jmozac"
+puts "http://cafelinux.info\n\n"
+
+if ARGV.length == 0
+	abort("Usage:\n\truby dirscanner.rb -u TARGET [-d PATH_DICTIONARY]\n\n")
+end
+# parameter
+if ARGV.include? '-d'
+	dictid = ARGV.index('-d') + 1
+	dict = ARGV[dictid]
+else
+	dict = 'directory-list-2.3-small.txt' # this dictionary available at DirBuster's directory
+end
 
 rr = []
 t=[*0..9]
 
-File.foreach('apps/DirBuster-0.12/directory-list-2.3-small.txt').with_index do |line, line_num|
+File.foreach(dict).with_index do |line, line_num|
 	rr << line.sub(/\n/,'')
 end
 
@@ -15,9 +29,6 @@ block_item=line_n / thread_n
 bx=[]
 block_n = line_n/block_item
 block_x	=[*0..block_n].each{|b|bx << b*block_item}
-puts "DirScanner v1.0"
-puts "Hard Coded by @jmozac"
-puts "http://cafelinux.info\n\n"
 puts "Started At #{Time.now}"
 
 
